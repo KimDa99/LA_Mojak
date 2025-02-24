@@ -78,3 +78,5 @@ LAMojak/Binaries/
 *.vsconfig
 LAMojak/Intermediate/
 LAMojak/Saved/
+LAMojak/Content/Resources/
+LAMojak/Content/Test.uasset
