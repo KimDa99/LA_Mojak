@@ -2,6 +2,7 @@
 
 #include "SMainBoard.h"
 #include "Widgets/Layout/SScaleBox.h"
+#include "HUD/StartMenu/SServerSelectionWidget.h"
 
 void SMainBoard::Construct(const FArguments& InArgs)
 {
@@ -11,8 +12,6 @@ void SMainBoard::Construct(const FArguments& InArgs)
 	FSlateBrush* BackgroundImageBrush = new FSlateBrush();
 	BackgroundImageBrush->SetResourceObject(BackgroundTexture);
 	BackgroundImageBrush->SetImageSize(FVector2D(256.f, 256.f));
-
-
 
 	UObject* TitleFont;
 	TitleFont = LoadObject<UObject>(nullptr, TEXT("/Game/Resources/Fonts/Danjo-bold-Regular_Font.Danjo-bold-Regular_Font"));
@@ -67,20 +66,19 @@ void SMainBoard::Construct(const FArguments& InArgs)
 
 		]
 
-		+SOverlay::Slot()
+		// For Test: start Menu
+		+ SOverlay::Slot()
 		.HAlign(HAlign_Center)
-		.VAlign(VAlign_Center)
+		.VAlign(VAlign_Bottom)
 		[
-			SNew(SBorder)
-			.BorderImage(BackgroundImageBrush)
-			.ColorAndOpacity(FColor::Blue)
-			.DesiredSizeScale(10)
-			.Content()
+			SNew(SScaleBox)
+			.Stretch(EStretch::ScaleToFit)
 			[
-				SNew(SVerticalBox)
-
+				SNew(SServerSelectionWidget)
 			]
 		]
+
+
 	];
 }
 
