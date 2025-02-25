@@ -30,6 +30,7 @@ void SImageTextButton::Construct(const FArguments& InArgs)
 				SAssignNew(TextWidget, STextBlock)
 				.Font(InArgs._FontInfo)
 				.Text(InArgs._ButtonText)
+				.ColorAndOpacity(InArgs._Color)
 			]
 		]
 	];
@@ -48,6 +49,6 @@ void SImageTextButton::SetImage(UTexture2D* Texture)
 	if (ImageWidget.IsValid())
 	{
 		// !!! Caution
-		ImageWidget->SetImage(Texture);
+		//ImageWidget->SetImage(Texture);
 	}
 }
