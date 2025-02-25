@@ -2,7 +2,9 @@
 
 #include "SMainBoard.h"
 #include "Widgets/Layout/SScaleBox.h"
+
 #include "HUD/StartMenu/SServerSelectionWidget.h"
+#include "HUD/StartMenu/SLogOutButtonWidget.h"
 
 void SMainBoard::Construct(const FArguments& InArgs)
 {
@@ -75,6 +77,18 @@ void SMainBoard::Construct(const FArguments& InArgs)
 			.Stretch(EStretch::ScaleToFit)
 			[
 				SNew(SServerSelectionWidget)
+			]
+		]
+
+		+ SOverlay::Slot()
+		.HAlign(HAlign_Left)
+		.VAlign(VAlign_Bottom)
+		.Padding(20.f)
+		[
+			SNew(SScaleBox)
+			.Stretch(EStretch::ScaleToFit)
+			[
+				SNew(SLogOutButtonWidget)
 			]
 		]
 
