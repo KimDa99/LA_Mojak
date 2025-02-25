@@ -5,6 +5,7 @@
 
 #include "HUD/StartMenu/SServerSelectionWidget.h"
 #include "HUD/StartMenu/SLogOutButtonWidget.h"
+#include "HUD/StartMenu/SStartSettingButtonWidget.h"
 
 void SMainBoard::Construct(const FArguments& InArgs)
 {
@@ -80,6 +81,7 @@ void SMainBoard::Construct(const FArguments& InArgs)
 			]
 		]
 
+		// LogOut
 		+ SOverlay::Slot()
 		.HAlign(HAlign_Left)
 		.VAlign(VAlign_Bottom)
@@ -92,6 +94,18 @@ void SMainBoard::Construct(const FArguments& InArgs)
 			]
 		]
 
+		// Setting
+		+ SOverlay::Slot()
+		.HAlign(HAlign_Right)
+		.VAlign(VAlign_Bottom)
+		.Padding(20.f)
+		[
+			SNew(SScaleBox)
+			.Stretch(EStretch::ScaleToFit)
+			[
+				SNew(SStartSettingButtonWidget)
+			]
+		]
 
 	];
 }
