@@ -16,7 +16,7 @@ struct LAMOJAK_API FServerInfo
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Info")
-	FString ServerName;
+	FString Name;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Info")
 	FString Status;
