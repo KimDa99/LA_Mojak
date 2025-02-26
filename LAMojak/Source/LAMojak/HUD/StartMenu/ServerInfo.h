@@ -16,10 +16,10 @@ struct LAMOJAK_API FServerInfo
 
 public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Info")
-	FString Name;
+	FText Name;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Info")
-	FString Status;
+	FText Status;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Server Info")
 	int32 NumberOfCharacter;

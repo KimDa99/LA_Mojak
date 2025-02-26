@@ -5,16 +5,18 @@
 #include "Widgets/Layout/SScaleBox.h"
 #include "../SImageTextButton.h"
 
+#define LOCTEXT_NAMESPACE "YourNamespace"
+
 void SServerSelectionWidget::Construct(const FArguments& InArgs)
 {
 	bCanSupportFocus = true;
 
 	GetServerInfo();
 
-	UTexture2D* PanelTexture = LoadObject<UTexture2D>(nullptr, TEXT("/Game/Resources/Images/StartMenu/OuterBorder_1.OuterBorder_1"));
+	UTexture2D* PanelTexture = LoadObject<UTexture2D>(nullptr, TEXT("/Game/Resources/Images/StartMenu/ServerSelect-MainPanel.ServerSelect-MainPanel"));
 	FSlateBrush* PanelImageBrush = new FSlateBrush();
 	PanelImageBrush->SetResourceObject(PanelTexture);
-	PanelImageBrush->SetImageSize(FVector2D(256.f, 256.f));
+	PanelImageBrush->SetImageSize(FVector2D(800.f, 256.f));
 
 	ChildSlot
 	[
@@ -32,6 +34,7 @@ void SServerSelectionWidget::Construct(const FArguments& InArgs)
 			]
 
 			+SOverlay::Slot()
+			.Padding(10.f)
 			[
 				GenerateServerTextButtons()
 			]
@@ -42,11 +45,12 @@ void SServerSelectionWidget::Construct(const FArguments& InArgs)
 
 void SServerSelectionWidget::GetServerInfo()
 {
-	PlayersServerInfos.Add( FServerInfo("ServerA", "I", 1));
-	PlayersServerInfos.Add( FServerInfo("ServerB", "J", 3));
-	PlayersServerInfos.Add( FServerInfo("ServerC", "I", 1));
-	PlayersServerInfos.Add( FServerInfo("ServerD", "I", 2));
+	PlayersServerInfos.Add(FServerInfo(LOCTEXT("Abraschud", "아브렐슈드"), LOCTEXT("ServerBusy", "혼잡"), 1));
+	PlayersServerInfos.Add(FServerInfo(LOCTEXT("Nanab", "나나브"), LOCTEXT("ServerNormal", "원활"), 3));
+	PlayersServerInfos.Add(FServerInfo(LOCTEXT("Kadan", "카단"), LOCTEXT("ServerNormal", "원활"), 1));
+	PlayersServerInfos.Add(FServerInfo(LOCTEXT("Kazeros", "카제로스"), LOCTEXT("ServerBusy", "혼잡"), 2));
 }
+
 
 TSharedRef<SVerticalBox> SServerSelectionWidget::GenerateServerTextButtons()
 {
@@ -64,11 +68,18 @@ TSharedRef<SVerticalBox> SServerSelectionWidget::GenerateServerTextButtons()
 
 	UObject* TitleFont;
 	TitleFont = LoadObject<UObject>(nullptr, TEXT("/Game/Resources/Fonts/Danjo-bold-Regular_Font.Danjo-bold-Regular_Font"));
-	FSlateFontInfo TitleStyleText = FSlateFontInfo(TitleFont, 35);
+	FSlateFontInfo TitleStyleText = FSlateFontInfo(TitleFont, 30);
 
 	UObject* ContentsFont;
 	ContentsFont = LoadObject<UObject>(nullptr, TEXT("/Game/Resources/Fonts/GowunDodum-Regular_Font.GowunDodum-Regular_Font"));
-	FSlateFontInfo ContentsStyleText = FSlateFontInfo(ContentsFont, 30);
+	FSlateFontInfo ContentsStyleText = FSlateFontInfo(ContentsFont, 25);
+
+
+	const FText ServerSelectionText = LOCTEXT("ServerSelection", "서버 선택");
+	const FText ServerColumnText = LOCTEXT("ServerColumn", "서버");
+	const FText StatusColumnText = LOCTEXT("StatusColumn", "상태");
+	const FText CharacterColumnText = LOCTEXT("CharacterColumn", "캐릭터");
+	const FText EnterButtonText = LOCTEXT("EnterButton", "입장");
 
 
 	TSharedRef<SVerticalBox> ServerList = SNew(SVerticalBox);
@@ -79,21 +90,21 @@ TSharedRef<SVerticalBox> SServerSelectionWidget::GenerateServerTextButtons()
 	.HAlign(HAlign_Center)
 	[
 		SNew(STextBlock)
-			.Text(FText::FromString("Select Server"))
+			.Text(ServerSelectionText)
 			.Font(TitleStyleText)
-			.ColorAndOpacity(FColor::Black)
+			.ColorAndOpacity(FColor::White)
 	];
 	
 	// Categories
 	ServerList->AddSlot()
 		.AutoHeight()
 		.Padding(5.0f)
-		.HAlign(HAlign_Center)
+		.HAlign(HAlign_Fill)
 		[
 			SNew(SHorizontalBox)
-			+ SHorizontalBox::Slot().Padding(30.0f).HAlign(HAlign_Center).AutoWidth()[SNew(STextBlock).Text(FText::FromString("Server Name")).Font(ContentsStyleText).ColorAndOpacity(FColor::Yellow)]
-			+ SHorizontalBox::Slot().Padding(30.0f).HAlign(HAlign_Center).AutoWidth()[SNew(STextBlock).Text(FText::FromString("Status")).Font(ContentsStyleText).ColorAndOpacity(FColor::Yellow)]
-			+ SHorizontalBox::Slot().Padding(30.0f).HAlign(HAlign_Center).AutoWidth()[SNew(STextBlock).Text(FText::FromString("Character")).Font(ContentsStyleText).ColorAndOpacity(FColor::Yellow)]
+			+ SHorizontalBox::Slot().Padding(30.0f).HAlign(HAlign_Center).FillWidth(3)[SNew(STextBlock).Text(ServerColumnText).Font(ContentsStyleText).ColorAndOpacity(FColor::Yellow)]
+			+ SHorizontalBox::Slot().Padding(30.0f).HAlign(HAlign_Center).FillWidth(1)[SNew(STextBlock).Text(StatusColumnText).Font(ContentsStyleText).ColorAndOpacity(FColor::Yellow)]
+			+ SHorizontalBox::Slot().Padding(30.0f).HAlign(HAlign_Center).FillWidth(1)[SNew(STextBlock).Text(CharacterColumnText).Font(ContentsStyleText).ColorAndOpacity(FColor::Yellow)]
 		];
 
 	// Server List
@@ -102,37 +113,38 @@ TSharedRef<SVerticalBox> SServerSelectionWidget::GenerateServerTextButtons()
 		const FServerInfo& Server = PlayersServerInfos[Index];
 		FSlateBrush* ButtonBrush = (Index % 2 == 0) ? EvenButtonImageBrush : OddButtonImageBrush;
 		FColor TextColor = (Index % 2 == 0) ? FColor::Black : FColor::White;
+		
+		// 상태에 따라 색상 변경 (혼잡: 노란색, 원활: 초록색)
+		FColor ServerStatusColor = (Server.Status.EqualTo(LOCTEXT("ServerBusy", "혼잡"))) ? FColor::Yellow : FColor::Green;
 
 		ServerList->AddSlot()
 			.AutoHeight()
-			.Padding(5.0f)
 			.VAlign(VAlign_Fill)
 			.HAlign(HAlign_Fill)
 			[
 				SNew(SButton)
-					.ButtonStyle(ButtonStyle)
+				.ButtonStyle(ButtonStyle)
+				.HAlign(HAlign_Fill)
+				[
+					SNew(SOverlay)
+
+					+ SOverlay::Slot()
 					.HAlign(HAlign_Fill)
+					.VAlign(VAlign_Fill)
 					[
-						SNew(SOverlay)
-
-						+ SOverlay::Slot()
-						.HAlign(HAlign_Fill)
-						.VAlign(VAlign_Fill)
-						[
-							SNew(SImage)
-							.Image(ButtonBrush)
-						]
-
-						+ SOverlay::Slot()
-						.Padding(5.f)
-						.HAlign(HAlign_Fill)
-						[
-							SNew(SHorizontalBox)
-							+ SHorizontalBox::Slot().Padding(10.0f).HAlign(HAlign_Center)[SNew(STextBlock).Text(FText::FromString(Server.Name)).Font(ContentsStyleText).ColorAndOpacity(TextColor)]
-							+ SHorizontalBox::Slot().Padding(10.0f).HAlign(HAlign_Center)[SNew(STextBlock).Text(FText::FromString(Server.Status)).Font(ContentsStyleText).ColorAndOpacity(TextColor)]
-							+ SHorizontalBox::Slot().Padding(10.0f).HAlign(HAlign_Center)[SNew(STextBlock).Text(FText::AsNumber(Server.NumberOfCharacter)).Font(ContentsStyleText).ColorAndOpacity(TextColor)]
-						]
+						SNew(SImage)
+						.Image(ButtonBrush)
 					]
+
+					+ SOverlay::Slot()
+					.HAlign(HAlign_Fill)
+					[	
+						SNew(SHorizontalBox)
+						+ SHorizontalBox::Slot().FillWidth(3).Padding(30.f, 1.0f).HAlign(HAlign_Center)[SNew(STextBlock).Text(Server.Name).Font(ContentsStyleText).ColorAndOpacity(TextColor)]
+						+ SHorizontalBox::Slot().FillWidth(1).Padding(30.f, 1.0f).HAlign(HAlign_Center)[SNew(STextBlock).Text(Server.Status).Font(ContentsStyleText).ColorAndOpacity(ServerStatusColor)]
+						+ SHorizontalBox::Slot().FillWidth(1).Padding(30.f, 1.0f).HAlign(HAlign_Center)[SNew(STextBlock).Text(FText::AsNumber(Server.NumberOfCharacter)).Font(ContentsStyleText).ColorAndOpacity(TextColor)]
+					]
+				]
 			];
 	}
 
@@ -142,12 +154,15 @@ TSharedRef<SVerticalBox> SServerSelectionWidget::GenerateServerTextButtons()
 		.HAlign(HAlign_Center)
 		[
 			SNew(SButton)
-			.Content()
+			.ContentPadding(10.f)
+			.Content()			
 			[				
 				SNew(STextBlock)
-				.Text(FText::FromString("Enter"))
-				.Font(ContentsStyleText)
+				.Text(EnterButtonText)
+				.Font(TitleStyleText)
 			]
 		];
 	return ServerList;
 }
+
+#undef LOCTEXT_NAMESPACE

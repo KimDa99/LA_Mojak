@@ -8,7 +8,7 @@ void SStartSettingButtonWidget::Construct(const FArguments& InArgs)
 	UTexture2D* IconImage = LoadObject<UTexture2D>(nullptr, TEXT("/Game/Resources/Images/StartMenu/settings-2-line.settings-2-line"));
 	FSlateBrush* IconBrush = new FSlateBrush();
 	IconBrush->SetResourceObject(IconImage);
-	IconBrush->SetImageSize(FVector2D(50.f, 50.f));
+	IconBrush->SetImageSize(FVector2D(100.f, 100.f));
 
 	USlateWidgetStyleAsset* ButtonStyle = LoadObject<USlateWidgetStyleAsset>(nullptr, TEXT("/Game/Resources/Brushes/BasicButtonBrush.BasicButtonBrush"));
 

@@ -6,6 +6,7 @@
 #include "HUD/StartMenu/SServerSelectionWidget.h"
 #include "HUD/StartMenu/SLogOutButtonWidget.h"
 #include "HUD/StartMenu/SStartSettingButtonWidget.h"
+#include "HUD/StartMenu/SStartMenuBackground.h"
 
 void SMainBoard::Construct(const FArguments& InArgs)
 {
@@ -68,6 +69,20 @@ void SMainBoard::Construct(const FArguments& InArgs)
 			]
 
 		]
+
+
+		// For test: startMenu Background
+		+ SOverlay::Slot()
+		.HAlign(HAlign_Fill)
+		.VAlign(VAlign_Fill)
+		[
+			SNew(SScaleBox)
+			.Stretch(EStretch::ScaleToFill)
+			[
+				SNew(SStartMenuBackground)
+			]
+		]
+
 
 		// For Test: start Menu
 		+ SOverlay::Slot()
