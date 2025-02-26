@@ -1,6 +1,5 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "TextManager.h"
 
 UTextManager* UTextManager::TextManager = nullptr;
@@ -25,4 +24,5 @@ void UTextManager::InitializeLocalization()
 	LocalizationMap.Add("CharacterColumn", LOCTEXT("StatusColumn", "캐릭터"));
 	LocalizationMap.Add("EnterButton", LOCTEXT("StatusColumn", "입장"));
 }
+
 #define LOCTEXT_NAMESPACE "LAMojak"

@@ -14,4 +14,6 @@ public:
 
 	virtual bool SupportsKeyboardFocus() const override { return true; }
 
+private:
+	const FString BackgroundTextureName = "ServerSelect-Background";
 };

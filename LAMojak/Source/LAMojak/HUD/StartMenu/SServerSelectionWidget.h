@@ -23,4 +23,11 @@ private:
 
 	TArray<FServerInfo> PlayersServerInfos;
 	TSharedPtr<SVerticalBox> VerticalBoxWidget;
+
+	const FVector2D ButtonSize = FVector2D(256.f, 64.f);
+	const FString OddButtonTextureName = "insideBorder_0.insideBorder_0";
+	const FString EvenButtonTextureName = "insideBorder_1.insideBorder_1";
+	const FString ButtonStyleName = "BasicButtonBrush.BasicButtonBrush";
+	const FString TitleFontName = "Danjo-bold-Regular_Font.Danjo-bold-Regular_Font";
+	const FString ContentsFontName = "GowunDodum-Regular_Font.GowunDodum-Regular_Font";
 };

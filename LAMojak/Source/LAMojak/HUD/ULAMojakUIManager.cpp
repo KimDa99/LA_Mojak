@@ -50,9 +50,9 @@ void ULAMojakUIManager::ShowServerSelection()
 		MainBoardWidget->AddWidget(ServerSelectionWidget.ToSharedRef(), 10.f, HAlign_Center, VAlign_Bottom);
 
 		LogOutButtonWidget = SNew(SLogOutButtonWidget);
-		MainBoardWidget->AddWidget(LogOutButtonWidget.ToSharedRef(), 10.f, HAlign_Right, VAlign_Bottom);
+		MainBoardWidget->AddWidget(LogOutButtonWidget.ToSharedRef(), 10.f, HAlign_Left, VAlign_Bottom);
 
 		StartSettingButtonWidget = SNew(SStartSettingButtonWidget);
-		MainBoardWidget->AddWidget(StartSettingButtonWidget.ToSharedRef(), 10.f, HAlign_Left, VAlign_Bottom);
+		MainBoardWidget->AddWidget(StartSettingButtonWidget.ToSharedRef(), 10.f, HAlign_Right, VAlign_Bottom);
 	}
 }

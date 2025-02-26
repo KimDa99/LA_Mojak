@@ -19,8 +19,7 @@ void SServerSelectionWidget::Construct(const FArguments& InArgs)
 	UTexture2D* PanelTexture = LoadObject<UTexture2D>(nullptr, *ResourceManager->GetTexturePath("ServerSelect-MainPanel.ServerSelect-MainPanel"));
 	FSlateBrush* PanelImageBrush = new FSlateBrush();
 	PanelImageBrush->SetResourceObject(PanelTexture);
-
-	PanelImageBrush->SetImageSize(FVector2D(PanelTexture->GetSizeX()*1.5f, PanelTexture->GetSizeY()));
+	PanelImageBrush->SetImageSize(FVector2D(PanelTexture->GetSizeX() * 1.5f, PanelTexture->GetSizeY()));
 
 	ChildSlot
 	[
@@ -59,27 +58,17 @@ void SServerSelectionWidget::GetServerInfo()
 TSharedRef<SVerticalBox> SServerSelectionWidget::GenerateServerTextButtons()
 {
 	UResourceManager* ResourceManager = UResourceManager::Get();
-
-	// Load button textures via ResourceManager
-	UTexture2D* OddButtonTexture = LoadObject<UTexture2D>(nullptr, *ResourceManager->GetTexturePath("insideBorder_0.insideBorder_0"));
 	FSlateBrush* OddButtonImageBrush = new FSlateBrush();
-	OddButtonImageBrush->SetResourceObject(OddButtonTexture);
-	OddButtonImageBrush->SetImageSize(FVector2D(256.f, 64.f));
+	OddButtonImageBrush->SetResourceObject(LoadObject<UTexture2D>(nullptr, *ResourceManager->GetTexturePath(OddButtonTextureName)));
+	OddButtonImageBrush->SetImageSize(ButtonSize);
 
-	UTexture2D* EvenButtonTexture = LoadObject<UTexture2D>(nullptr, *ResourceManager->GetTexturePath("insideBorder_1.insideBorder_1"));
 	FSlateBrush* EvenButtonImageBrush = new FSlateBrush();
-	EvenButtonImageBrush->SetResourceObject(EvenButtonTexture);
-	EvenButtonImageBrush->SetImageSize(FVector2D(256.f, 64.f));
+	EvenButtonImageBrush->SetResourceObject(LoadObject<UTexture2D>(nullptr, *ResourceManager->GetTexturePath(EvenButtonTextureName)));
+	EvenButtonImageBrush->SetImageSize(ButtonSize);
 
-	// Load button style from ResourceManager
-	USlateWidgetStyleAsset* ButtonStyle = LoadObject<USlateWidgetStyleAsset>(nullptr, *ResourceManager->GetBrushAssetPath("BasicButtonBrush.BasicButtonBrush"));
-
-	// Load fonts from ResourceManager
-	UObject* TitleFont = LoadObject<UObject>(nullptr, *ResourceManager->GetFontAssetPath("Danjo-bold-Regular_Font.Danjo-bold-Regular_Font"));
-	FSlateFontInfo TitleStyleText = FSlateFontInfo(TitleFont, 25);
-
-	UObject* ContentsFont = LoadObject<UObject>(nullptr, *ResourceManager->GetFontAssetPath("GowunDodum-Regular_Font.GowunDodum-Regular_Font"));
-	FSlateFontInfo ContentsStyleText = FSlateFontInfo(ContentsFont, 20);
+	USlateWidgetStyleAsset* ButtonStyle = LoadObject<USlateWidgetStyleAsset>(nullptr, *ResourceManager->GetBrushAssetPath(ButtonStyleName));
+	FSlateFontInfo TitleStyleText(LoadObject<UObject>(nullptr, *ResourceManager->GetFontAssetPath(TitleFontName)), 25);
+	FSlateFontInfo ContentsStyleText(LoadObject<UObject>(nullptr, *ResourceManager->GetFontAssetPath(ContentsFontName)), 20);
 
 	// Localized strings for columns and buttons
 	const FText ServerSelectionText = UTextManager::Get()->GetLocalizedText("ServerSelectionTitle");
