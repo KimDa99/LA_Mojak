@@ -1,6 +1,8 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "LAMojakHUD.h"
+#include "UResourceManager.h"
+#include "TextManager.h"
 
 #include "Engine/Engine.h"
 #include "Widgets/SWeakWidget.h"
@@ -8,10 +10,16 @@
 
 void ALAMojakHUD::BeginPlay()
 {
-	if (GEngine && GEngine->GameViewport)
-	{
-		MainBoardWidget = SNew(SMainBoard).OwningHUD(this);
-		GEngine->GameViewport->AddViewportWidgetContent(
-			SAssignNew(MainWidgetContainer, SWeakWidget).PossiblyNullContent(MainBoardWidget.ToSharedRef()));
-	}
+	Super::BeginPlay();
+
+    UTextManager* TextManager = UTextManager::Get();
+    TextManager->InitializeLocalization();
+
+    UResourceManager* ResourceManager = UResourceManager::Get();
+
+	UIManager = NewObject<ULAMojakUIManager>();
+	UIManager->Initialize(GetOwningPlayerController(), ResourceManager, TextManager);
+
+	UIManager->ShowMainBoard();
+	UIManager->ShowServerSelection();
 }

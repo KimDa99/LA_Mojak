@@ -3,6 +3,8 @@
 #include "SServerSelectionWidget.h"
 
 #include "Widgets/Layout/SScaleBox.h"
+#include "../TextManager.h"
+#include "../UResourceManager.h"
 #include "../SImageTextButton.h"
 
 #define LOCTEXT_NAMESPACE "YourNamespace"
@@ -13,10 +15,12 @@ void SServerSelectionWidget::Construct(const FArguments& InArgs)
 
 	GetServerInfo();
 
-	UTexture2D* PanelTexture = LoadObject<UTexture2D>(nullptr, TEXT("/Game/Resources/Images/StartMenu/ServerSelect-MainPanel.ServerSelect-MainPanel"));
+	UResourceManager* ResourceManager = UResourceManager::Get();
+	UTexture2D* PanelTexture = LoadObject<UTexture2D>(nullptr, *ResourceManager->GetTexturePath("ServerSelect-MainPanel.ServerSelect-MainPanel"));
 	FSlateBrush* PanelImageBrush = new FSlateBrush();
 	PanelImageBrush->SetResourceObject(PanelTexture);
-	PanelImageBrush->SetImageSize(FVector2D(800.f, 256.f));
+
+	PanelImageBrush->SetImageSize(FVector2D(PanelTexture->GetSizeX()*1.5f, PanelTexture->GetSizeY()));
 
 	ChildSlot
 	[
@@ -54,32 +58,36 @@ void SServerSelectionWidget::GetServerInfo()
 
 TSharedRef<SVerticalBox> SServerSelectionWidget::GenerateServerTextButtons()
 {
-	UTexture2D* OodButtonTexture = LoadObject<UTexture2D>(nullptr, TEXT("/Game/Resources/Images/StartMenu/insideBorder_0.insideBorder_0"));
+	UResourceManager* ResourceManager = UResourceManager::Get();
+
+	// Load button textures via ResourceManager
+	UTexture2D* OddButtonTexture = LoadObject<UTexture2D>(nullptr, *ResourceManager->GetTexturePath("insideBorder_0.insideBorder_0"));
 	FSlateBrush* OddButtonImageBrush = new FSlateBrush();
-	OddButtonImageBrush->SetResourceObject(OodButtonTexture);
+	OddButtonImageBrush->SetResourceObject(OddButtonTexture);
 	OddButtonImageBrush->SetImageSize(FVector2D(256.f, 64.f));
 
-	UTexture2D* EvenButtonTexture = LoadObject<UTexture2D>(nullptr, TEXT("/Game/Resources/Images/StartMenu/insideBorder_1.insideBorder_1"));
+	UTexture2D* EvenButtonTexture = LoadObject<UTexture2D>(nullptr, *ResourceManager->GetTexturePath("insideBorder_1.insideBorder_1"));
 	FSlateBrush* EvenButtonImageBrush = new FSlateBrush();
 	EvenButtonImageBrush->SetResourceObject(EvenButtonTexture);
 	EvenButtonImageBrush->SetImageSize(FVector2D(256.f, 64.f));
 
-	USlateWidgetStyleAsset* ButtonStyle = LoadObject<USlateWidgetStyleAsset>(nullptr, TEXT("/Game/Resources/Brushes/BasicButtonBrush.BasicButtonBrush"));
+	// Load button style from ResourceManager
+	USlateWidgetStyleAsset* ButtonStyle = LoadObject<USlateWidgetStyleAsset>(nullptr, *ResourceManager->GetBrushAssetPath("BasicButtonBrush.BasicButtonBrush"));
 
-	UObject* TitleFont;
-	TitleFont = LoadObject<UObject>(nullptr, TEXT("/Game/Resources/Fonts/Danjo-bold-Regular_Font.Danjo-bold-Regular_Font"));
-	FSlateFontInfo TitleStyleText = FSlateFontInfo(TitleFont, 30);
+	// Load fonts from ResourceManager
+	UObject* TitleFont = LoadObject<UObject>(nullptr, *ResourceManager->GetFontAssetPath("Danjo-bold-Regular_Font.Danjo-bold-Regular_Font"));
+	FSlateFontInfo TitleStyleText = FSlateFontInfo(TitleFont, 25);
 
-	UObject* ContentsFont;
-	ContentsFont = LoadObject<UObject>(nullptr, TEXT("/Game/Resources/Fonts/GowunDodum-Regular_Font.GowunDodum-Regular_Font"));
-	FSlateFontInfo ContentsStyleText = FSlateFontInfo(ContentsFont, 25);
+	UObject* ContentsFont = LoadObject<UObject>(nullptr, *ResourceManager->GetFontAssetPath("GowunDodum-Regular_Font.GowunDodum-Regular_Font"));
+	FSlateFontInfo ContentsStyleText = FSlateFontInfo(ContentsFont, 20);
 
+	// Localized strings for columns and buttons
+	const FText ServerSelectionText = UTextManager::Get()->GetLocalizedText("ServerSelectionTitle");
+	const FText ServerColumnText = UTextManager::Get()->GetLocalizedText("ServerColumn");
+	const FText StatusColumnText = UTextManager::Get()->GetLocalizedText("StatusColumn");
+	const FText CharacterColumnText = UTextManager::Get()->GetLocalizedText("CharacterColumn");
+	const FText EnterButtonText = UTextManager::Get()->GetLocalizedText("EnterButton");
 
-	const FText ServerSelectionText = LOCTEXT("ServerSelection", "서버 선택");
-	const FText ServerColumnText = LOCTEXT("ServerColumn", "서버");
-	const FText StatusColumnText = LOCTEXT("StatusColumn", "상태");
-	const FText CharacterColumnText = LOCTEXT("CharacterColumn", "캐릭터");
-	const FText EnterButtonText = LOCTEXT("EnterButton", "입장");
 
 
 	TSharedRef<SVerticalBox> ServerList = SNew(SVerticalBox);
@@ -140,9 +148,9 @@ TSharedRef<SVerticalBox> SServerSelectionWidget::GenerateServerTextButtons()
 					.HAlign(HAlign_Fill)
 					[	
 						SNew(SHorizontalBox)
-						+ SHorizontalBox::Slot().FillWidth(3).Padding(30.f, 1.0f).HAlign(HAlign_Center)[SNew(STextBlock).Text(Server.Name).Font(ContentsStyleText).ColorAndOpacity(TextColor)]
-						+ SHorizontalBox::Slot().FillWidth(1).Padding(30.f, 1.0f).HAlign(HAlign_Center)[SNew(STextBlock).Text(Server.Status).Font(ContentsStyleText).ColorAndOpacity(ServerStatusColor)]
-						+ SHorizontalBox::Slot().FillWidth(1).Padding(30.f, 1.0f).HAlign(HAlign_Center)[SNew(STextBlock).Text(FText::AsNumber(Server.NumberOfCharacter)).Font(ContentsStyleText).ColorAndOpacity(TextColor)]
+						+ SHorizontalBox::Slot().FillWidth(3).Padding(30.f, 1.0f).HAlign(HAlign_Center).VAlign(VAlign_Center)[SNew(STextBlock).Text(Server.Name).Font(ContentsStyleText).ColorAndOpacity(TextColor)]
+						+ SHorizontalBox::Slot().FillWidth(1).Padding(30.f, 1.0f).HAlign(HAlign_Center).VAlign(VAlign_Center)[SNew(STextBlock).Text(Server.Status).Font(ContentsStyleText).ColorAndOpacity(ServerStatusColor)]
+						+ SHorizontalBox::Slot().FillWidth(1).Padding(30.f, 1.0f).HAlign(HAlign_Center).VAlign(VAlign_Center)[SNew(STextBlock).Text(FText::AsNumber(Server.NumberOfCharacter)).Font(ContentsStyleText).ColorAndOpacity(TextColor)]
 					]
 				]
 			];
@@ -155,6 +163,8 @@ TSharedRef<SVerticalBox> SServerSelectionWidget::GenerateServerTextButtons()
 		[
 			SNew(SButton)
 			.ContentPadding(10.f)
+			.VAlign(VAlign_Center)
+			.HAlign(HAlign_Center)
 			.Content()			
 			[				
 				SNew(STextBlock)

@@ -8,9 +8,6 @@ class LAMOJAK_API SStartMenuBackground : public SCompoundWidget
 {
 public:
 	SLATE_BEGIN_ARGS(SStartMenuBackground) {}
-
-	SLATE_ARGUMENT(TWeakObjectPtr<class ALAMojakHUD>, OwningHUD)
-
 	SLATE_END_ARGS()
 
 	void Construct(const FArguments& InArgs);

@@ -10,21 +10,17 @@ class LAMOJAK_API SServerSelectionWidget : public SCompoundWidget
 {
 public:
 	SLATE_BEGIN_ARGS(SServerSelectionWidget) {}
-
-	SLATE_ARGUMENT(TWeakObjectPtr<class ALAMojakHUD>, OwningHUD)
-
 	SLATE_END_ARGS()
 
 	void Construct(const FArguments& InArgs);
 
-	TArray<FServerInfo> PlayersServerInfos;
-
-	void GetServerInfo();
-
 	virtual bool SupportsKeyboardFocus() const override { return true; }
+
+private:
+	void GetServerInfo();
 
 	TSharedRef<SVerticalBox> GenerateServerTextButtons();
 
+	TArray<FServerInfo> PlayersServerInfos;
 	TSharedPtr<SVerticalBox> VerticalBoxWidget;
-
 };
