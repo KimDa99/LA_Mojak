@@ -56,3 +56,13 @@ void ULAMojakUIManager::ShowServerSelection()
 		MainBoardWidget->AddWidget(StartSettingButtonWidget.ToSharedRef(), 10.f, HAlign_Right, VAlign_Bottom);
 	}
 }
+
+void ULAMojakUIManager::ShowInGameUI()
+{
+	if (MainBoardWidget.IsValid())
+	{
+		SliderBarWidget = SNew(SSliderBar);
+		MainBoardWidget->AddWidget(SliderBarWidget.ToSharedRef(), 10.f, HAlign_Center, VAlign_Bottom);
+	}
+
+}

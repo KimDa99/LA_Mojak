@@ -21,5 +21,7 @@ void ALAMojakHUD::BeginPlay()
 	UIManager->Initialize(GetOwningPlayerController(), ResourceManager, TextManager);
 
 	UIManager->ShowMainBoard();
-	UIManager->ShowServerSelection();
+	//UIManager->ShowServerSelection();
+
+	UIManager->ShowInGameUI();
 }

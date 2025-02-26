@@ -10,6 +10,9 @@
 #include "StartMenu/SStartMenuBackground.h"
 #include "StartMenu/SStartSettingButtonWidget.h"
 
+// InGame
+#include "InGame/SSliderBar.h"
+
 #include "Widgets/SCompoundWidget.h"
 #include "UResourceManager.h"
 #include "TextManager.h"
@@ -44,6 +47,8 @@ private:
 	TSharedPtr<SLogOutButtonWidget> LogOutButtonWidget;
 	TSharedPtr<SStartSettingButtonWidget> StartSettingButtonWidget;
 
+private:
+	TSharedPtr<SSliderBar> SliderBarWidget;
 public:
 	void ShowInGameUI();
 
