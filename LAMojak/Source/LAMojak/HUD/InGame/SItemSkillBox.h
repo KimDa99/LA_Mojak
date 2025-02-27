@@ -15,6 +15,7 @@ public:
 	void SetImageBox(UTexture2D* BoxTexture);
 	void SetKey(FString Key);
 	void SetImageBlank();
+
 private:
 	FSlateBrush* DefaultImageBrush;
 

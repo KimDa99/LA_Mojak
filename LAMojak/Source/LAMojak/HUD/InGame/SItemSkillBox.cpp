@@ -65,6 +65,11 @@ void SItemSkillBox::Construct(const FArguments& InArgs)
 }
 void SItemSkillBox::SetImageBox(UTexture2D* BoxTexture)
 {
+	if (BoxTexture == nullptr)
+	{
+		return;
+	}
+
 	FSlateBrush* BoxImageBrush = new FSlateBrush();
 	BoxImageBrush->SetResourceObject(BoxTexture);
 	BoxImageBrush->SetImageSize(FVector2D(BoxTexture->GetSizeX(), BoxTexture->GetSizeY()));

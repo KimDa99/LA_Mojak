@@ -61,11 +61,14 @@ void ULAMojakUIManager::ShowInGameUI()
 {
 	if (MainBoardWidget.IsValid())
 	{
-		SliderBarWidget = SNew(SSliderBar);
-		MainBoardWidget->AddWidget(SliderBarWidget.ToSharedRef(), 10.f, HAlign_Center, VAlign_Bottom);
+		//SliderBarWidget = SNew(SSliderBar);
+		//MainBoardWidget->AddWidget(SliderBarWidget.ToSharedRef(), 10.f, HAlign_Center, VAlign_Bottom);
 
-		ItemSkillBoxWidget = SNew(SItemSkillBox);
-		MainBoardWidget->AddWidget(ItemSkillBoxWidget.ToSharedRef(), 10.f, HAlign_Right, VAlign_Top);
+		//ItemSkillBoxWidget = SNew(SItemSkillBox);
+		//MainBoardWidget->AddWidget(ItemSkillBoxWidget.ToSharedRef(), 10.f, HAlign_Right, VAlign_Top);
+
+		StatusBarWidget = SNew(SStatusBar);
+		MainBoardWidget->AddWidget(StatusBarWidget.ToSharedRef(), 10.f, HAlign_Center, VAlign_Bottom);
 	}
 
 }
