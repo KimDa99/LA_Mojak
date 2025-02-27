@@ -39,6 +39,8 @@ private:
 	TSharedPtr<SHorizontalBox> ItemBar0;
 	TSharedPtr<SHorizontalBox> ItemBar1;
 
+	const FString ManaInnerTextureName = "InGame-MP-Inner.InGame-MP-Inner";
+
 	const TArray<FString> SkillNames = { "InGame-CrossBlade", "InGame-PunshingDraw", "InGame-FuriousClaw", "InGame-FatalSword", "InGame-WildRush", "InGame-GroundSmash" };
 	const TArray<FString> SkillShortCutKeys = { "Q", "W", "E", "R", "A", "S", "D", "F"};
 

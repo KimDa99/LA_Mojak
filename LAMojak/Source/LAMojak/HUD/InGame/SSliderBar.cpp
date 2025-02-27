@@ -22,7 +22,6 @@ void SSliderBar::Construct(const FArguments& InArgs)
 
 	FSlateFontInfo Font = FSlateFontInfo(LoadObject<UObject>(nullptr, *ResourceManager->GetFontAssetPath(FontName)), 25);
 
-
 	ChildSlot
 		[
 			SNew(SOverlay)
@@ -53,6 +52,36 @@ void SSliderBar::Construct(const FArguments& InArgs)
 						.Image(OuterImageBrush)
 					]
 			]
+			+ SOverlay::Slot()
+			.HAlign(HAlign_Center)
+			.VAlign(VAlign_Center)
+			[
+				SNew(SHorizontalBox)
+				+ SHorizontalBox::Slot()
+				.AutoWidth()
+				[
+					SAssignNew(CurrentValueText, STextBlock)
+						.Font(Font)
+						.Text(FText::FromString("1000"))
+				]
+
+				+SHorizontalBox::Slot()
+				.AutoWidth()
+				[
+					SNew(STextBlock)
+					.Font(Font)
+					.Text(FText::FromString("/"))
+				]
+
+				+SHorizontalBox::Slot()
+				.AutoWidth()
+				[
+					SAssignNew(MaxValueText, STextBlock)
+					.Font(Font)
+					.Text(FText::FromString("1000"))
+				]
+			]
+
 		];
 }
 
@@ -65,5 +94,25 @@ void SSliderBar::SetAndUpdateSliderValue(float NewValue)
 		SliderBox->GetSlot(0).SetFillWidth(SliderValue);
 		SliderBox->GetSlot(1).SetFillWidth(1 - SliderValue);
 	}
+}
+void SSliderBar::SetSliderImage(FString NewTexturePath)
+{
+	UResourceManager* ResourceManager = UResourceManager::Get();
+	UTexture2D* Texture = LoadObject<UTexture2D>(nullptr, *ResourceManager->GetTexturePath(NewTexturePath));
+	FSlateBrush* ImageBrush = new FSlateBrush();
+	ImageBrush->SetResourceObject(Texture);
+	ImageBrush->SetImageSize(SliderBarSize);
+
+	if (SliderBox.IsValid())
+	{
+		TSharedPtr<SWidget> Widget = (SliderBox)->GetChildren()->GetChildAt(0);
+		StaticCastSharedPtr<SImage>(Widget)->SetImage(ImageBrush);
+	}
+}
+void SSliderBar::SetCurrentValueText(FString NewText)
+{
+}
+void SSliderBar::SetMaxValueText(FString NewText)
+{
 }
 END_SLATE_FUNCTION_BUILD_OPTIMIZATION

@@ -15,13 +15,17 @@ public:
 	{}
 	SLATE_END_ARGS()
 
-	/** Constructs this widget with InArgs */
 	void Construct(const FArguments& InArgs);
 	void SetAndUpdateSliderValue(float NewValue);
-private:
-	//TSharedPtr<STextBlock> SliderValueText;
-	TSharedPtr<SHorizontalBox> SliderBox;
+	void SetSliderImage(FString NewTexturePath);
 
+	void SetCurrentValueText(FString NewText);
+	void SetMaxValueText(FString NewText);
+
+private:
+	TSharedPtr<SHorizontalBox> SliderBox;
+	TSharedPtr<STextBlock> CurrentValueText;
+	TSharedPtr<STextBlock> MaxValueText;
 
 	const FVector2D SliderBarSize = FVector2D(256.f, 64.f);
 	const FString OuterTextureName = "InGame-HP-Outer.InGame-HP-Outer";

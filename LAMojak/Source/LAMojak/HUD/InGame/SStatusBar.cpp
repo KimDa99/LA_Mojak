@@ -69,6 +69,8 @@ void SStatusBar::Construct(const FArguments& InArgs)
 
 	];
 
+	ManaBar->SetSliderImage(ManaInnerTextureName);
+
 	GenerateSkillItemBoxs();
 
 	for (int i = 0; i < 8; ++i)
@@ -129,26 +131,26 @@ void SStatusBar::SetSkillItemShortcuts()
 
 void SStatusBar::UpdateImageKeyBox(const int index, const bool IsSkill = true)
 {
-	if (index < 0 || index >= 8)
+	if (index < 0 || (IsSkill && index >= 8) || (!IsSkill && index >= 10))
 	{
 		return;
 	}
 
-	int SkillIndex;
+	int BoxIndex;
 	UResourceManager* ResourceManager = UResourceManager::Get();
 	TSharedPtr<SHorizontalBox>* SelectedBarPtr;
 	if (IsSkill)
 	{
 		SelectedBarPtr = (index < 4)? &SkillBar0 : &SkillBar1;
-		SkillIndex = (index < 4) ? index : index - 4;
+		BoxIndex = (index < 4) ? index : index - 4;
 	}
 	else
 	{
 		SelectedBarPtr = (index < 6) ? &ItemBar0 : &ItemBar1;
-		SkillIndex = (index < 6) ? index : index - 6;
+		BoxIndex = (index < 6) ? index : index - 6;
 	}
 
-	TSharedPtr<SWidget> Widget = (*SelectedBarPtr)->GetChildren()->GetChildAt(SkillIndex);
+	TSharedPtr<SWidget> Widget = (*SelectedBarPtr)->GetChildren()->GetChildAt(BoxIndex);
 
 	if (!Widget.IsValid())
 	{
