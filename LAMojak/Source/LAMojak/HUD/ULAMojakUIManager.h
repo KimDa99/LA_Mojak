@@ -11,9 +11,8 @@
 #include "StartMenu/SStartSettingButtonWidget.h"
 
 // InGame
-#include "InGame/SSliderBar.h"
-#include "InGame/SItemSkillBox.h"
 #include "InGame/SStatusBar.h"
+#include "InGame/SBottomRightBar.h"
 
 #include "Widgets/SCompoundWidget.h"
 #include "UResourceManager.h"
@@ -50,9 +49,9 @@ private:
 	TSharedPtr<SStartSettingButtonWidget> StartSettingButtonWidget;
 
 private:
-	//TSharedPtr<SSliderBar> SliderBarWidget;
-	//TSharedPtr<SItemSkillBox> ItemSkillBoxWidget;
 	TSharedPtr<SStatusBar> StatusBarWidget;
+	TSharedPtr<SBottomRightBar> BottomRightBarWidget;
+
 public:
 	void ShowInGameUI();
 
