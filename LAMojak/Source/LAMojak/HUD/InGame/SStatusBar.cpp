@@ -77,6 +77,7 @@ void SStatusBar::Construct(const FArguments& InArgs)
 	{
 		UpdateImageKeyBox(i, true);
 	}
+
 	for (int i = 0; i < 10; ++i)
 	{
 		UpdateImageKeyBox(i, false);

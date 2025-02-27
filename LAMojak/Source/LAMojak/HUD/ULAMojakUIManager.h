@@ -11,9 +11,8 @@
 #include "StartMenu/SStartSettingButtonWidget.h"
 
 // InGame
-#include "InGame/SSliderBar.h"
-#include "InGame/SItemSkillBox.h"
 #include "InGame/SStatusBar.h"
+#include "InGame/SBottomButtonsBar.h"
 
 #include "Widgets/SCompoundWidget.h"
 #include "UResourceManager.h"
@@ -40,7 +39,7 @@ private:
 	TSharedPtr<class SMainBoard> MainBoardWidget;
 	TSharedPtr<SWidget> MainWidgetContainer;
 
-public:
+public: 
 	void ShowServerSelection();
 
 private:
@@ -49,11 +48,11 @@ private:
 	TSharedPtr<SLogOutButtonWidget> LogOutButtonWidget;
 	TSharedPtr<SStartSettingButtonWidget> StartSettingButtonWidget;
 
-private:
-	//TSharedPtr<SSliderBar> SliderBarWidget;
-	//TSharedPtr<SItemSkillBox> ItemSkillBoxWidget;
-	TSharedPtr<SStatusBar> StatusBarWidget;
 public:
 	void ShowInGameUI();
+
+private:
+	TSharedPtr<SStatusBar> StatusBarWidget;
+	TSharedPtr<SBottomButtonsBar> BottomButtonsBarWidget;
 
 };

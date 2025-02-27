@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-#include "../UResourceManager.h"
 #include "SLogOutButtonWidget.h"
+#include "../UResourceManager.h"
 
 void SLogOutButtonWidget::Construct(const FArguments& InArgs)
 {	
